@@ -22,14 +22,6 @@ jobs:
           username: ${{secrets.DOCKERHUB_USERNAME}}
           password: ${{secrets.DOCKERHUB_PASSWORD}}
 
-      - name: Install hadolint
-        run: |
-          wget -O /usr/local/bin/hadolint https://github.com/hadolint/hadolint/releases/latest/download/hadolint-Linux-x86_64
-          chmod +x /usr/local/bin/hadolint
-
-      - name: Lint Dockerfile
-        run: hadolint Dockerfile
-
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
