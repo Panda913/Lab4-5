@@ -30,9 +30,16 @@ jobs:
         run: terraform init
 
       - name: Plan Terraform changes
+        id: plan
         run: terraform plan -out=tfplan
+        continue-on-error: true
+
+      - name: Check if changes need to be applied
+        id: check_changes
+        run: echo "::set-output name=changes::$(terraform show -no-color tfplan | grep -c 'Plan: ')"
 
       - name: Apply Terraform changes
+        if: steps.check_changes.outputs.changes == '1'
         run: terraform apply -auto-approve tfplan
 
       - name: Destroy infrastructure
