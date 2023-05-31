@@ -21,7 +21,7 @@ resource "aws_security_group" "web_sg" {
 
 # Створення VM instance
 resource "aws_instance" "web_server" {
-  ami           = "${{secrets.AMI_ID}}"
+  ami  = var.ami_id
   instance_type = "t2.micro" 
 
 
