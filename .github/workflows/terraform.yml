@@ -35,9 +35,7 @@ jobs:
         continue-on-error: true
 
       - name: Apply Terraform changes
-        if: steps.check_changes.outputs.changes == '1'
         run: terraform apply -auto-approve tfplan
 
       - name: Destroy infrastructure
-        if: github.ref == 'refs/heads/main' && github.event_name == 'pull_request'
         run: terraform destroy -auto-approve
