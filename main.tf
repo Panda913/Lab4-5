@@ -6,6 +6,7 @@ provider "aws" {
   region = "eu-north-1"
 }
 
+
 # Створення Security Group
 resource "aws_security_group" "web_sg" {
   name        = "web_security_group"
