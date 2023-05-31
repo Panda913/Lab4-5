@@ -1,9 +1,9 @@
 
 # Оголошення провайдера для Terraform 
 provider "aws" {
-  access_key ="${{secrets.ACCESS_KEY}}"
-  secret_access_key ="${{secrets.SECRET_ACCESS_KEY}}"
-  region = "eu-north-1" 
+  access_key = var.access_key
+  secret_access_key = var.secret_access_key
+  region = "eu-north-1"
 }
 
 # Створення Security Group
