@@ -1,8 +1,8 @@
 
 # Оголошення провайдера для Terraform 
 provider "aws" {
-  access_key = "${{secrets.ACCESS_KEY}}"
-  secret_access_key = "${{secrets.SECRET_ACCESS_KEY}}"
+  access_key = ${{secrets.ACCESS_KEY}}
+  secret_access_key = ${{secrets.SECRET_ACCESS_KEY}}
   region = "eu-north-1" 
 }
 
