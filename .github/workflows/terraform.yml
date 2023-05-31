@@ -1,0 +1,32 @@
+name: Terraform
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.0.0
+
+      - name: Initialize Terraform
+        run: terraform init
+
+      - name: Plan Terraform changes
+        run: terraform plan -out=tfplan
+
+      - name: Apply Terraform changes
+        run: terraform apply -auto-approve tfplan
+
+      - name: Destroy infrastructure
+        if: github.ref == 'refs/heads/main' && github.event_name == 'pull_request'
+        run: terraform destroy -auto-approve
