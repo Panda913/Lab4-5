@@ -45,11 +45,11 @@ resource "aws_security_group" "web_sg" {
 resource "aws_instance" "web_server" {
   ami  = var.ami_id
   instance_type = "t2.micro" 
-
+  key_name                    = "iit-lab4"
 
   # Підключення Security Group до інстансу
   vpc_security_group_ids = [aws_security_group.web_sg.id]
-
+  associate_public_ip_address = true
   # Установка Docker після створення інстансу
   user_data = <<-EOF
               #!/bin/bash
@@ -57,9 +57,8 @@ resource "aws_instance" "web_server" {
               sudo apt-get install -y docker.io
               sudo systemctl start docker
               EOF
+  tags = {
+    Name = "Lab6"
+  }
 }
 
-# Оголошення виводу публічної IP-адреси інстансу
-output "public_ip" {
-  value = aws_instance.web_server.public_ip
-}
