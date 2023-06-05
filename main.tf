@@ -10,15 +10,15 @@ terraform {
 }
 # Оголошення провайдера для Terraform 
 provider "aws" {
-  access_key = var.access_key
-  secret_access_key = var.secret_access_key
+  access_key = "AKIARVVK42DMZFXDTF4Y"
+  secret_key = "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"
   region = "eu-north-1"
 }
 
 
 # Створення Security Group
 resource "aws_security_group" "web_sg" {
-  name        = "web_security_group"
+  name        = "Lab6"
   description = "Security Group"
 
   ingress {
@@ -41,24 +41,11 @@ resource "aws_security_group" "web_sg" {
   }
 }
 
-# Створення VM instance
-resource "aws_instance" "web_server" {
-  ami  = var.ami_id
-  instance_type = "t2.micro" 
-  key_name                    = "iit-lab4"
-
-  # Підключення Security Group до інстансу
-  vpc_security_group_ids = [aws_security_group.web_sg.id]
+resource "aws_instance" "app_server" {
+  ami                         = "ami-064087b8d355e9051"
+  instance_type               = "t3.micro"
+  key_name                    = "lab4"
+  vpc_security_group_ids      = [aws_security_group.web_sg.id]
   associate_public_ip_address = true
-  # Установка Docker після створення інстансу
-  user_data = <<-EOF
-              #!/bin/bash
-              sudo apt-get update
-              sudo apt-get install -y docker.io
-              sudo systemctl start docker
-              EOF
-  tags = {
-    Name = "Lab6"
-  }
-}
 
+}
